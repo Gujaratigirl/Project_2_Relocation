@@ -28,35 +28,35 @@ def CA():
 
     header = "California"
 
-    return render_template('state.html', header=header, inflow=inflow)
+    return render_template('index.html', header=header, inflow=inflow)
 
 @app.route('/florida')
 def FL():
 
     header = "Florida"
 
-    return render_template('state.html', header=header, inflow=inflow)
+    return render_template('index.html', header=header, inflow=inflow)
 
 @app.route('/indiana')
 def IN():
 
     header = "Indiana"
 
-    return render_template('state.html', header=header, inflow=inflow)
+    return render_template('index.html', header=header, inflow=inflow)
 
 @app.route('/north_carolina')
 def NC():
 
     header = "North Carolina"
 
-    return render_template('state.html', header=header, inflow=inflow)
+    return render_template('index.html', header=header, inflow=inflow)
 
 @app.route('/texas')
 def TX():
 
     header = "Texas"
 
-    return render_template('state.html', header=header, inflow=inflow)
+    return render_template('index.html', header=header, inflow=inflow)
 
 if __name__ == "__main__":
     app.run(debug=True)
