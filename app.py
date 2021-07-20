@@ -1,70 +1,81 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify
 
 import numpy as np
+from us_states import statesData
+import pandas as pd
 
 from sqlalchemy import create_engine
+from sqlalchemy.ext.automap import automap_base
 # Create a Session Object to Connect to DB
 # ----------------------------------
 # Session is a temporary binding to our DB
 from sqlalchemy.orm import Session
+
+import json
 
 app = Flask(__name__)
 
 #################################################
 # Database Setup
 #################################################
-connection_string = "postgres:Hema@localhost:5432/migration_db"
-engine = create_engine(f'postgresql://{connection_string}')
-conn = engine.connect()
-session = Session(bind=engine)
+rds_connection_string = "postgres:postgres@localhost:5432/migration_db"
+engine = create_engine(f'postgresql://{rds_connection_string}')
+
+Base = automap_base()
+
+Base.prepare(engine, reflect=True)
+
+Relo = Base.classes.relocation
+
+session = Session(engine)
 
 @app.route('/')
 def index():
     return render_template("index.html")
 
-@app.route('/api/statemigration/<state>')
-def statemgiration(state):
-    data = list(db.latest_data.find())
+@app.route('/api/statemigration')
+def api_pull():
+    
 
-    header = "California"
+    data = session.query(Relo).all()
 
-    return render_template('index.html', header=header, inflow=inflow)
+    relo_list = []
 
-@app.route('/california')
-def CA():
-    data = list(db.latest_data.find())
+    for row in data:
+        dict = {}
+        dict["primary_state"] = row.primary_state
+        dict["secondary_state"] = row.secondary_state
+        dict["inflow"] = row.inflow
+        dict["outflow"] = row.outflow
+        relo_list.append(dict)
+        
+    state_features = statesData["features"]
 
-    header = "California"
+    for doc in state_features:
+        feature_list = []
+        for item in relo_list:
+            if item["secondary_state"] == doc["properties"]["name"]:
+                dict = {}
+                dict["primary_state"] = item["primary_state"]
+                dict["inflow"] = item["inflow"]
+                dict["outflow"] = item["outflow"]
+                feature_list.append(dict)
+        doc["properties"]["flows"] = feature_list
+    statesData["features"] = state_features
 
-    return render_template('index.html', header=header, inflow=inflow)
+    session.close()
 
-@app.route('/florida')
-def FL():
+    return(jsonify(statesData))
 
-    header = "Florida"
 
-    return render_template('index.html', header=header, inflow=inflow)
+    # document = {}
+    # document["primary_state"] = row.primary_state
+    # document["secondary_state"] = row.secondary_state
+    # document["inflow"] = row.inflow
+    # document["outflow"] = row.outflow
+    # data.append(document)
 
-@app.route('/indiana')
-def IN():
-
-    header = "Indiana"
-
-    return render_template('index.html', header=header, inflow=inflow)
-
-@app.route('/north_carolina')
-def NC():
-
-    header = "North Carolina"
-
-    return render_template('index.html', header=header, inflow=inflow)
-
-@app.route('/texas')
-def TX():
-
-    header = "Texas"
-
-    return render_template('index.html', header=header, inflow=inflow)
+    # return render_template('index.html', header=header, inflow=inflow)
 
 if __name__ == "__main__":
     app.run(debug=True)
