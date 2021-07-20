@@ -62,6 +62,8 @@ def api_pull():
         doc["properties"]["flows"] = feature_list
     statesData["features"] = state_features
 
+    session.close()
+
     return(jsonify(statesData))
 
 
