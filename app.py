@@ -24,7 +24,7 @@ def index():
 
 @app.route('/california')
 def CA():
-    data = list(db.latest_data.find())
+    #Return JSONified data, 
 
     header = "California"
 
