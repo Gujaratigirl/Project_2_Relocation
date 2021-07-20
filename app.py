@@ -13,7 +13,7 @@ app = Flask(__name__)
 #################################################
 # Database Setup
 #################################################
-connection_string = "postgres:postgres@localhost:5432/migration_db"
+connection_string = "postgres:Hema@localhost:5432/migration_db"
 engine = create_engine(f'postgresql://{connection_string}')
 conn = engine.connect()
 session = Session(bind=engine)
@@ -21,6 +21,14 @@ session = Session(bind=engine)
 @app.route('/')
 def index():
     return render_template("index.html")
+
+@app.route('/api/statemigration/<state>')
+def statemgiration(state):
+    data = list(db.latest_data.find())
+
+    header = "California"
+
+    return render_template('index.html', header=header, inflow=inflow)
 
 @app.route('/california')
 def CA():

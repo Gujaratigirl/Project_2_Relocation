@@ -8,3 +8,13 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
 }).addTo(map);
 
 L.geoJson(statesData).addTo(map);
+
+var selected_state = ""
+var api = "";
+
+d3.json("/data/sample_data.json").then(
+    function(data)
+    {
+
+    }
+);
