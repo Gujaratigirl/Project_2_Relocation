@@ -18,16 +18,6 @@ app = Flask(__name__)
 #################################################
 # Database Setup
 #################################################
-rds_connection_string = "postgres:postgres@localhost:5432/migration_db"
-engine = create_engine(f'postgresql://{rds_connection_string}')
-
-Base = automap_base()
-
-Base.prepare(engine, reflect=True)
-
-Relo = Base.classes.relocation
-
-session = Session(engine)
 
 @app.route('/')
 def index():
@@ -35,7 +25,16 @@ def index():
 
 @app.route('/api/statemigration')
 def api_pull():
+    rds_connection_string = "postgres:postgres@localhost:5432/migration_db"
+    engine = create_engine(f'postgresql://{rds_connection_string}')
     
+    Base = automap_base()
+
+    Base.prepare(engine, reflect=True)
+
+    Relo = Base.classes.relocation
+
+    session = Session(engine)
 
     data = session.query(Relo).all()
 
@@ -62,8 +61,6 @@ def api_pull():
                 feature_list.append(dict)
         doc["properties"]["flows"] = feature_list
     statesData["features"] = state_features
-
-    session.close()
 
     return(jsonify(statesData))
 
