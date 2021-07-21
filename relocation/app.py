@@ -19,8 +19,8 @@ app = Flask(__name__)
 #################################################
 # Database Setup
 #################################################
-rds_connection_string = os.environ.get('DATABASE_URL', '') or "postgres:postgres@localhost:5432/migration_db"
-engine = create_engine(f'postgresql://{rds_connection_string}')
+rds_connection_string = os.environ.get('DATABASE_URL', '') or "postgresql://postgres:postgres@localhost:5432/migration_db"
+engine = create_engine(f'{rds_connection_string}')
 
 Base = automap_base()
 
