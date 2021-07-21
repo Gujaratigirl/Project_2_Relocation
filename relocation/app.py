@@ -1,10 +1,7 @@
 from flask import Flask, render_template, jsonify
 
+from us_states import statesData
 import os
-import numpy as np
-import us_states
-# from us_states import statesData
-import pandas as pd
 
 from sqlalchemy import create_engine, func
 from sqlalchemy.ext.automap import automap_base
@@ -12,8 +9,6 @@ from sqlalchemy.ext.automap import automap_base
 # ----------------------------------
 # Session is a temporary binding to our DB
 from sqlalchemy.orm import Session
-
-import json
 
 app = Flask(__name__)
 
@@ -30,8 +25,6 @@ Base.prepare(engine, reflect=True)
 Relo = Base.classes.relocation
 
 session = Session(engine)
-
-statesData = us_states.statesData
 
 @app.route('/')
 def index():
