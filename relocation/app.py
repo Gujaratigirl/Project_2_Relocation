@@ -3,7 +3,7 @@ from flask import Flask, render_template, jsonify
 import os
 import numpy as np
 import us_states
-from us_states import statesData
+# from us_states import statesData
 import pandas as pd
 
 from sqlalchemy import create_engine, func
@@ -30,6 +30,8 @@ Base.prepare(engine, reflect=True)
 Relo = Base.classes.relocation
 
 session = Session(engine)
+
+statesData = us_states.statesData
 
 @app.route('/')
 def index():
