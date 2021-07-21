@@ -1,6 +1,6 @@
-from flask import Flask, render_template, jsonify
+from flask import (Flask, render_template, jsonify)
 
-import us_states
+from . import us_states
 import os
 
 # from sqlalchemy import create_engine, func
@@ -133,4 +133,4 @@ def index():
     # return render_template('index.html', header=header, inflow=inflow)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
