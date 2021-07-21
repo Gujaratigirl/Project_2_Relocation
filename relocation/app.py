@@ -1,7 +1,8 @@
 from flask import Flask, render_template, jsonify
 
+import os
 import numpy as np
-from us_states import statesData
+from .us_states import statesData
 import pandas as pd
 
 from sqlalchemy import create_engine
@@ -18,7 +19,7 @@ app = Flask(__name__)
 #################################################
 # Database Setup
 #################################################
-rds_connection_string = "postgres:postgres@localhost:5432/migration_db"
+rds_connection_string = os.environ.get('DATABASE_URL', '') or "postgres:postgres@localhost:5432/migration_db"
 engine = create_engine(f'postgresql://{rds_connection_string}')
 
 Base = automap_base()
