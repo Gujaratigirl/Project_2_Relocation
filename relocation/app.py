@@ -2,6 +2,7 @@ from flask import Flask, render_template, jsonify
 
 import os
 import numpy as np
+from relocation import us_states
 from us_states import statesData
 import pandas as pd
 
