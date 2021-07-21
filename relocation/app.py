@@ -1,6 +1,6 @@
 from flask import Flask, render_template, jsonify
 
-from us_states import statesData
+import us_states
 import os
 
 from sqlalchemy import create_engine, func
@@ -25,6 +25,8 @@ Base.prepare(engine, reflect=True)
 Relo = Base.classes.relocation
 
 session = Session(engine)
+
+statesData = us_states.statesData
 
 @app.route('/')
 def index():
