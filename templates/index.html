@@ -51,15 +51,37 @@
         </nav>
 
     </div>
+    
+
 
     <div class="container">
+        <div class="container_intro">
+            <h2> Welcome to the 2019 United States State-to-State Migration dashboard!</h2>
+            <p>This page uses American Community Survey data from the latest available year, 2019, to visualize recent state-to-state migration trends for 5 U.S. states of interest:
+            </p>
+            <ul>
+                <li>Indiana</li>
+                <li>California</li>
+                <li>Florida</li>
+                <li>North Carolina</li>
+                <li>Texas</li>
+            </ul>
+
+            <p>Four of the five states were chosen for having the highest overall migration totals, and the fifth state, Indiana, is of interest for being the residence of the majority of the 2021 Butler University data analytics cohort.
+
+            </p>
+
+            <p>Choose your state of interest from the drop-down to see inflows and outflows. Select the “Inflow” radio button above to see where recent migrants to your chosen state moved from; select the “Outflow” button to see where individuals who recently left your chosen state moved to. The map will refresh to show the values as a heat map, and the chart to the right will display the top 10 states with the highest inflow or outflow numbers in relation to your chosen state. The raw data table is displayed at the bottom of the page.
+
+            </p>
+        </div>
 
         <div class="row">
             <!-- This is the main box on the page that shows you the map you selected. -->
             <div class="col-12 col-md-8">
 
                 <div class="box">
-                    <h3 class="title">Migration - In & Out</h3>
+                    <h3 class="title">Migration 2019</h3>
                     <hr>
                     <div id="map"></div>
                     <p></p>
@@ -67,21 +89,46 @@
 
             </div>
             <!-- This is the sidebar that displays the data for the state selected. -->
-            <div class="col-6 col-md-4">
+            <div class="col-12 col-md-2">
 
                 <div class="box">
-                    <h5 class="title">Data</h5>
+                    <h5 class="title">States In Flow</h5>
                     <hr>
+                    <select id="selState_in">
+                        <option value="indiana">Indiana</option>
+                        <option value="california">California</option>
+                        <option value="florida">Florida</option>
+                        <option value="north carolina">North Carolina</option>
+                        <option value="texas">Texas</option>
+                        
+                    </select>
+
+                </div>
+
+            </div>
+            <!-- This is the sidebar that displays the data for the state selected. -->
+            <div class="col-12 col-md-2">
+
+                <div class="box">
+                    <h5 class="title">States Out Flow</h5>
+                    <hr>
+                    <select id="selState_out">
+                        <option value="indiana">Indiana</option>
+                        <option value="california">California</option>
+                        <option value="florida">Florida</option>
+                        <option value="north carolina">North Carolina</option>
+                        <option value="texas">Texas</option>
+                        
+                    </select>
 
                     
 
                 </div>
 
             </div>
-
         </div>
 
-        <div class="row">
+        <!-- <div class="row">
 
             <div class="col-12">
 
@@ -95,7 +142,7 @@
 
             </div>
 
-        </div>
+        </div> -->
 
     </div>
 

@@ -36,16 +36,16 @@ def index():
     return render_template("index.html")
 
 
-@app.route('/api/test/<sel_state>')
-def api_pull2(sel_state):
-    sel_state = sel_state.upper()
+@app.route('/api/test/<state_name>')
+def api_pull2(state_name):
+    state_name = state_name.upper()
     rds_connection_string = "postgres:Hema@localhost:5432/migration_db"
     engine = create_engine(f'postgresql://{rds_connection_string}')
     Base = automap_base()
     Base.prepare(engine, reflect=True)
     Relo = Base.classes.relocation
     session = Session(engine)
-    data = session.query(Relo).filter(func.upper(Relo.primary_state)==sel_state).all()
+    data = session.query(Relo).filter(func.upper(Relo.primary_state)==state_name).all()
     relo_list = []
     for row in data:
         dict = {}
