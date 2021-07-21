@@ -57,10 +57,10 @@ function updateStateIN (){
 };   
     
 d3.selectAll("#selState_out").on("change", updateStateOUT);
+// d3.selectAll("#selState_out").on("change", stateSort);
 function updateStateOUT (){
     var dropdownMenu = d3.select("#selState_out");
     state_name = dropdownMenu.property("value");
-
 
     d3.json("/api/test/"+ state_name).then(
         function(data){
@@ -88,13 +88,70 @@ function updateStateOUT (){
                     color: 'white',
                     dashArray: '3',
                     fillOpacity: 1
-            
-                };
-                
+                };   
             }
+
             L.geoJson(data, {style: style}).addTo(map);
             
-           
-        })
+            function highlightFeature(e) {
+                var layer = e.target;
+            
+                layer.setStyle({
+                    weight: 5,
+                    color: '#666',
+                    dashArray: '',
+                    fillOpacity: 0.7
+                })
+                info.update(layer.feature.properties);
+            };
 
+
+
+
+            var info = L.control();
+
+                info.onAdd = function (map) {
+                    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+                    this.update();
+                    return this._div;
+                };
+                function resetHighlight(e) {
+                    geojson.resetStyle(e.target);
+                    info.update();    
+                };
+                var geojson;
+
+                function zoomToFeature(e) {
+                    map.fitBounds(e.target.getBounds());
+                };
+                function onEachFeature(feature, layer) {
+                    layer.on({
+                        mouseover: highlightFeature,
+                        mouseout: resetHighlight,
+                        click: zoomToFeature
+                    });
+                }
+                
+                geojson = L.geoJson(data, {
+                    style: style,
+                    onEachFeature: onEachFeature
+                }).addTo(map);
+
+
+
+
+                // method that we will use to update the control based on feature properties passed
+                info.update = function (props) {
+                    this._div.innerHTML = '<h4>State Outflow</h4>' +  (props ?
+                        '<b>' + props.outflow + '</b>'
+                        : 'Hover over a state');
+                };
+
+                info.addTo(map);
+                    });
+                
 };
+        
+
+
+            
