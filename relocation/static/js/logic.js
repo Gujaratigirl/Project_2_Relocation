@@ -101,6 +101,25 @@ function updateStateIN (){
                 };
 
                 info.addTo(map);
+
+                var legend = L.control({position: 'bottomright'});
+
+                legend.onAdd = function (map) {
+
+                    var div = L.DomUtil.create('div', 'info legend'),
+                        grades = [0, 1, 23000, 34500, 46000, 57500, 69000, 80500],
+                        labels = [];
+
+                    for (var i = 0; i < grades.length; i++) {
+                        div.innerHTML +=
+                        '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+                        grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+                    }
+
+                    return div;
+                };
+
+                legend.addTo(map);
         })
 
 };   
