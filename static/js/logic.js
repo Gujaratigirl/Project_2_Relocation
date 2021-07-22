@@ -101,8 +101,8 @@ function updateStateIN (){
 
                 // method that we will use to update the control based on feature properties passed
                 info.update = function (props) {
-                    this._div.innerHTML = '<h4>State Inflow Total</h4>' +  (props ?
-                        '<b>' + props.inflow + '  people </b> '
+                    this._div.innerHTML = '<h4> State Inflow Total <br>' + state_name + '</h4>' +  (props ?
+                        '<b></b><br />' + props.outflow + '  people move out of </b> ' + props.name 
                         : 'Hover over a state');
                 };
 
@@ -115,7 +115,8 @@ d3.selectAll("#selState_out").on("change", updateStateOUT);
 function updateStateOUT (){
     var dropdownMenu = d3.select("#selState_out");
     state_name = dropdownMenu.property("value");
-    
+    //state_capital = state_name.upper()
+
     d3.json("/api/test/"+ state_name).then(
         
         function(data){
@@ -194,14 +195,38 @@ function updateStateOUT (){
                 // method that we will use to update the control based on feature properties passed
                 info.update = function (props) {
                     
-                    this._div.innerHTML = '<h4>State Outflow Total</h4>' +  (props ?
-                        '<b>' + props.outflow + '  people </b> '
+
+                    this._div.innerHTML = '<h4> State Outflow Total <br>' + state_name + '</h4>' +  (props ?
+                        '<b></b><br />' + props.outflow + '  people move into </b> ' + props.name 
                         : 'Hover over a state');
                 };
                 info.addTo(map)
                 
+                
+                // var legend = L.control({position: 'bottomright'});
+
+                // legend.onAdd = function (map) {
+
+                //     var div = L.DomUtil.create('div', 'info legend'),
+                //         grades = [0, 5, 10, 20, 50, 100, 200, 500, 1000],
+                //         labels = [];
+
+                //     // loop through our density intervals and generate a label with a colored square for each interval
+                //     for (var i = 0; i < grades.length; i++) {
+                //         div.innerHTML +=
+                //             '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+                //             grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+                //     }
+
+                //     return div;
+                // };
+
+                // legend.addTo(map);
+                
                     });
                 
+                
+    ;            
 };
         
 
