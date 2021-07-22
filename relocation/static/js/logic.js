@@ -105,6 +105,8 @@ function updateStateIN (){
                 var legend = L.control({position: 'bottomright'});
 
                 legend.onAdd = function (map) {
+                    
+                    d3.select("div.info legend").remove();
 
                     var div = L.DomUtil.create('div', 'info legend'),
                         grades = [0, 1, 23000, 34500, 46000, 57500, 69000, 80500],
@@ -216,6 +218,8 @@ function updateStateOUT (){
                 var legend = L.control({position: 'bottomright'});
 
                 legend.onAdd = function (map) {
+
+                    d3.select("div.info legend").remove();
 
                     var div = L.DomUtil.create('div', 'info legend'),
                         grades = [0, 1, 23000, 34500, 46000, 57500, 69000, 80500],
