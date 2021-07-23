@@ -2,9 +2,10 @@
 
 
 Team:  
-Sydni 
-Alivia 
-Hema 
+
+           Sydni   
+           Alivia   
+           Hema   
 
 
 ## State to State Migration Page
@@ -30,10 +31,10 @@ Choose your state of interest from the drop-down to see inflows and outflows. Se
 
 ### Important files and folders 
 
-Templates.    
-Static. 
-Data. 
-app.py.  
+           Templates       
+           Static   
+           Data   
+           app.py    
 
 
 Other files and folders are just for research and testing.
