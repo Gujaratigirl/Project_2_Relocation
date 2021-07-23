@@ -5,6 +5,8 @@
 
 Welcome to the 2019 United States State-to-State Migration dashboard!</h2>
 This page uses American Community Survey data from the latest available year, 2019, to visualize recent state-to-state migration trends for 5 U.S. states of interest:   
+
+
            Indiana.  
            California.  
            Florida.  
