@@ -95,7 +95,7 @@ function updateStateIN (){
 
                 // method that we will use to update the control based on feature properties passed
                 info.update = function (props) {
-                    this._div.innerHTML = '<h4> State Inflow Total <br>' + state_name + '</h4>' +  (props ?
+                    this._div.innerHTML = '<h4>State Inflow Total <br>' + state_name.toUpperCase() + '</h4>' +  (props ?
                         '<b></b><br />' + props.outflow + '  people move out of </b> ' + props.name 
                         : 'Hover over a state');
                 };
@@ -115,7 +115,7 @@ function updateStateIN (){
                     for (var i = 0; i < grades.length; i++) {
                         div.innerHTML +=
                         '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-                        grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+                        grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<p/>' : '+');
                     }
 
                     return div;
@@ -209,7 +209,7 @@ function updateStateOUT (){
                 // method that we will use to update the control based on feature properties passed
                 info.update = function (props) {
                     
-                    this._div.innerHTML = '<h4> State Outflow Total <br>' + state_name + '</h4>' +  (props ?
+                    this._div.innerHTML = '<h4>State Outflow Total<br>' + state_name.toUpperCase() + '</h4>' +  (props ?
                         '<b></b><br />' + props.outflow + '  people move into </b> ' + props.name 
                         : 'Hover over a state');
                 };
@@ -228,7 +228,7 @@ function updateStateOUT (){
                     for (var i = 0; i < grades.length; i++) {
                         div.innerHTML +=
                         '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-                        grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+                        grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<p/>' : '+');
                     }
 
                     return div;
