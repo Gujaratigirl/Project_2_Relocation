@@ -235,6 +235,35 @@ function updateStateOUT (){
                 };
 
                 legend.addTo(map);
+
+                //Sort the State data from high to low.
+                        var filteredStates = data.sort((a,b) => b.features.properties.inflow - a.features.properties.inflow);
+                        console.log(filteredStates);
+
+                        // 3. Use the map method with the arrow function to return all the filtered titles.
+                        var titles = filteredStates.map(state =>  state.name);
+                        console.log(titles);
+
+                        // 5. Create your trace.
+                        var trace = {
+                        x: titles,
+                        y: filteredStates,
+                        type: "bar"
+                        };
+
+                        // 6. Create the data array for our plot
+                        var data = [trace];
+
+                        // 7. Define our plot layout
+                        var layout = {
+                        title: "The highest movement of people",
+                        xaxis: { title: "State" },
+                        yaxis: { title: "Number of People"}
+                        };
+
+                        // 8. Plot the chart to a div tag with id "bar-plot"
+                        Plotly.newPlot("bar-plot", data, layout);
+
         })
 
 };
