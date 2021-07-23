@@ -129,5 +129,9 @@ h5 {
 }
 
 footer {
-  display: block;
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+  background-color: #0BADA6;
+  color: #fff;
 }
