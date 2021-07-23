@@ -18,18 +18,14 @@ app = Flask(__name__)
 #################################################
 # Database Setup
 #################################################
+
 rds_connection_string = "postgres:Hema@localhost:5432/migration_db"
 engine = create_engine(f'postgresql://{rds_connection_string}')
 
+#print(Base.classes.keys())
 Base = automap_base()
-
 Base.prepare(engine, reflect=True)
-
-print(Base.classes.keys())
-
 Relo = Base.classes.relocation
-
-session = Session(engine)
 
 @app.route('/')
 def index():
@@ -39,11 +35,7 @@ def index():
 @app.route('/api/test/<state_name>')
 def api_pull2(state_name):
     state_name = state_name.upper()
-    rds_connection_string = "postgres:Hema@localhost:5432/migration_db"
-    engine = create_engine(f'postgresql://{rds_connection_string}')
-    Base = automap_base()
-    Base.prepare(engine, reflect=True)
-    Relo = Base.classes.relocation
+    
     session = Session(engine)
     data = session.query(Relo).filter(func.upper(Relo.primary_state)==state_name).all()
     relo_list = []
@@ -62,8 +54,6 @@ def api_pull2(state_name):
     statesData["features"] = state_features
     session.close()
     return(jsonify(statesData))
-
-
 
 
 if __name__ == "__main__":
