@@ -18,22 +18,56 @@ app = Flask(__name__)
 #################################################
 # Database Setup
 #################################################
+
 rds_connection_string = "postgres:Hema@localhost:5432/migration_db"
 engine = create_engine(f'postgresql://{rds_connection_string}')
 
-Base = automap_base()
 
-Base.prepare(engine, reflect=True)
+@app.route('/')
+def index():
+    return render_template("index.html")
+
+@app.route('/api/statemigration/CA')
+def api_pull():
+    rds_connection_string = "postgres:postgres@localhost:5432/migration_db"
+    engine = create_engine(f'postgresql://{rds_connection_string}')
+    
+    Base = automap_base()
+
 
 print(Base.classes.keys())
 
 Relo = Base.classes.relocation
 
-session = Session(engine)
 
-@app.route('/')
-def index():
-    return render_template("index.html")
+    Relo = Base.classes.relocation
+
+    session = Session(engine)
+
+    data = session.query(Relo).filter(Relo.primary_state=='California').all()
+
+    relo_list = []
+
+    for row in data:
+        dict = {}
+        dict["secondary_state"] = row.secondary_state
+        dict["inflow"] = row.inflow
+        dict["outflow"] = row.outflow
+        relo_list.append(dict)
+        
+    state_features = statesData["features"]
+
+    for doc in state_features:
+        for item in relo_list:
+            if item["secondary_state"] == doc["properties"]["name"]:
+                doc["properties"]["inflow"] = item["inflow"]
+                doc["properties"]["outflow"] = item["outflow"]
+    statesData["features"] = state_features
+
+    session.close()
+
+    return(jsonify(statesData))
+
 
 
 @app.route('/api/test/<state_name>')
