@@ -133,5 +133,8 @@ footer {
   justify-content: center;
   padding: 5px;
   background-color: #0BADA6;
-  color: rgb(250, 246, 246)!important;
+}
+
+#footer {
+  color: rgb(250, 246, 246);
 }
