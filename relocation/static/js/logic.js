@@ -96,7 +96,7 @@ function updateStateIN (){
                 // method that we will use to update the control based on feature properties passed
                 info.update = function (props) {
                     this._div.innerHTML = '<h4>State Inflow Total</h4>' +  (props ?
-                        '<b>' + props.inflow + '  people </b> '
+                        '<b></b><br />' + props.outflow + '  people move out of </b> ' + props.name 
                         : 'Hover over a state');
                 };
 
@@ -210,7 +210,7 @@ function updateStateOUT (){
                 info.update = function (props) {
                     
                     this._div.innerHTML = '<h4>State Outflow Total</h4>' +  (props ?
-                        '<b>' + props.outflow + '  people </b> '
+                        '<b></b><br />' + props.outflow + '  people move into </b> ' + props.name 
                         : 'Hover over a state');
                 };
                 info.addTo(map)
