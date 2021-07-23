@@ -9,8 +9,6 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
 
 L.geoJson(statesData).addTo(map);
 
-var count = 0
-
 var sample_data;
 d3.selectAll("#selState_in").on("change", updateStateIN);
 var state_value
@@ -19,11 +17,7 @@ var state_name
 function updateStateIN (){
     var dropdownMenu = d3.select("#selState_in");
     state_name = dropdownMenu.property("value");
-    
-    
-    // if (count > 0 ) {
-    // map.removeTo(info);}
-    // count = count + 1
+
 
     d3.json("/api/test/"+ state_name).then(
         function(data){
@@ -101,56 +95,45 @@ function updateStateIN (){
 
                 // method that we will use to update the control based on feature properties passed
                 info.update = function (props) {
-                    this._div.innerHTML = '<h4> State Inflow Total <br>' + state_name + '</h4>' +  (props ?
-                        '<b></b><br />' + props.outflow + '  people move out of </b> ' + props.name 
+                    this._div.innerHTML = '<h4>State Inflow Total</h4>' +  (props ?
+                        '<b>' + props.inflow + '  people </b> '
                         : 'Hover over a state');
                 };
 
                 info.addTo(map);
-                    });
 
-                    // Sort the State data from high to low.
-                        // var filteredStates = data.sort((a,b) => b.features.properties.inflow - a.features.properties.inflow);
-                        // console.log(filteredStates);
+                var legend = L.control({position: 'bottomright'});
 
-                        // // 3. Use the map method with the arrow function to return all the filtered titles.
-                        // var titles = filteredStates.map(state =>  state.name);
-                        // console.log(titles);
+                legend.onAdd = function (map) {
+                    
+                    d3.select("div.legend").remove();
 
-                        // // 5. Create your trace.
-                        // var trace = {
-                        // x: titles,
-                        // y: filteredStates,
-                        // type: "bar"
-                        // };
+                    var div = L.DomUtil.create('div', 'info legend'),
+                        grades = [0, 1, 23000, 34500, 46000, 57500, 69000, 80500],
+                        labels = [];
 
-                        // // 6. Create the data array for our plot
-                        // var data = [trace];
+                    for (var i = 0; i < grades.length; i++) {
+                        div.innerHTML +=
+                        '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+                        grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+                    }
 
-                        // // 7. Define our plot layout
-                        // var layout = {
-                        // title: "The highest movement of people",
-                        // xaxis: { title: "State" },
-                        // yaxis: { title: "Number of People"}
-                        // };
+                    return div;
+                };
 
-                        // // 8. Plot the chart to a div tag with id "bar-plot"
-                        // Plotly.newPlot("bar-plot", data, layout);
+                legend.addTo(map);
+        })
 
-
-        };   
+};   
     
 d3.selectAll("#selState_out").on("change", updateStateOUT);
-// d3.selectAll("#selState_out").on("change", stateSort);
 function updateStateOUT (){
     var dropdownMenu = d3.select("#selState_out");
     state_name = dropdownMenu.property("value");
-    //state_capital = state_name.upper()
+
 
     d3.json("/api/test/"+ state_name).then(
-        
         function(data){
-            
 
             function getColor(c) {
                 return c > 80500 ? '#800026' :
@@ -175,9 +158,10 @@ function updateStateOUT (){
                     color: 'white',
                     dashArray: '3',
                     fillOpacity: 1
-                };   
+            
+                };
+                
             }
-
             L.geoJson(data, {style: style}).addTo(map);
             
             function highlightFeature(e) {
@@ -225,40 +209,32 @@ function updateStateOUT (){
                 // method that we will use to update the control based on feature properties passed
                 info.update = function (props) {
                     
-
-                    this._div.innerHTML = '<h4> State Outflow Total <br>' + state_name + '</h4>' +  (props ?
-                        '<b></b><br />' + props.outflow + '  people move into </b> ' + props.name 
+                    this._div.innerHTML = '<h4>State Outflow Total</h4>' +  (props ?
+                        '<b>' + props.outflow + '  people </b> '
                         : 'Hover over a state');
                 };
                 info.addTo(map)
-                
-                
-                // var legend = L.control({position: 'bottomright'});
 
-                // legend.onAdd = function (map) {
+                var legend = L.control({position: 'bottomright'});
 
-                //     var div = L.DomUtil.create('div', 'info legend'),
-                //         grades = [0, 5, 10, 20, 50, 100, 200, 500, 1000],
-                //         labels = [];
+                legend.onAdd = function (map) {
 
-                //     // loop through our density intervals and generate a label with a colored square for each interval
-                //     for (var i = 0; i < grades.length; i++) {
-                //         div.innerHTML +=
-                //             '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-                //             grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
-                //     }
+                    d3.select("div.legend").remove();
 
-                //     return div;
-                // };
+                    var div = L.DomUtil.create('div', 'info legend'),
+                        grades = [0, 1, 23000, 34500, 46000, 57500, 69000, 80500],
+                        labels = [];
 
-                // legend.addTo(map);
-                
-                    });
-                
-                
-    ;            
+                    for (var i = 0; i < grades.length; i++) {
+                        div.innerHTML +=
+                        '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+                        grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+                    }
+
+                    return div;
+                };
+
+                legend.addTo(map);
+        })
+
 };
-        
-
-
-            
