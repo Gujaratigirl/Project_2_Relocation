@@ -29,12 +29,16 @@ Choose your state of interest from the drop-down to see inflows and outflows. Se
 ## Main branch has working files to work through a local source.
 ## Heroku branch has files that will drive a cloud source.
 
+
 ### Important files and folders 
 
            Templates       
            Static   
            Data   
-           app.py    
+           app.py  
+           Powerpoint
+           Proposal
+
 
 
 Other files and folders are just for research and testing.
